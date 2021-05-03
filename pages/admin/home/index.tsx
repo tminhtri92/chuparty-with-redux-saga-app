@@ -24,7 +24,7 @@ export default function AdminHome() {
   }, []);
 
   const handleTestSaveData = () => {
-    saveData("/public/newfile.txt", "Some data").then(function (result) {
+    saveData("public/newfile.txt", "Some data").then(function (result) {
       console.log(result);
     });
   };
