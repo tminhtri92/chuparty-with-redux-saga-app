@@ -8,7 +8,7 @@ export default function EmailInvitation() {
         this link to accept the invite:
       </p>
       <p>
-        <a href="{{ .ConfirmationURL }}/admin/">Accept the invite</a>
+        <a href="/admin/{{ .ConfirmationURL }}">Accept the invite</a>
       </p>
     </>
   );
