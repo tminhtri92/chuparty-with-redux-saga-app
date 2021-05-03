@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Router from "next/router";
 
 import netlifyAuth from "../../netlifyAuth";
 
 export default function Home() {
-  let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
+  const [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
+  let [user, setUser] = useState(null);
 
   useEffect(() => {
     let isCurrent = true;
     netlifyAuth.initialize((user) => {
       if (isCurrent) {
         setLoggedIn(!!user);
+        setUser(user);
       }
     });
 
@@ -42,7 +45,7 @@ export default function Home() {
         {loggedIn ? (
           <div>
             You're logged in! Please do visit{" "}
-            <Link href="/protected">
+            <Link href="/admin/home">
               <a>the special, members-only space.</a>
             </Link>
           </div>

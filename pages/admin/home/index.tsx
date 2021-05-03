@@ -5,7 +5,7 @@ import Link from "next/link";
 import netlifyAuth from "../../../netlifyAuth";
 import { getData, saveData } from "../../../libs/github";
 
-export default function Protected() {
+export default function AdminHome() {
   let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
   let [user, setUser] = useState(null);
 
@@ -24,7 +24,7 @@ export default function Protected() {
   }, []);
 
   const handleTestSaveData = () => {
-    saveData("newfile.txt", "Some data").then(function (result) {
+    saveData("/public/newfile.txt", "Some data").then(function (result) {
       console.log(result);
     });
   };
@@ -63,8 +63,8 @@ export default function Protected() {
       ) : (
         <main>
           <p>YOU ARE NOT ALLOWED HERE.</p>
-          <Link href="/">
-            <a>Go back to the grody public space.</a>
+          <Link href="/admin">
+            <a>Go back to login.</a>
           </Link>
         </main>
       )}
