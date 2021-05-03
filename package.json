@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/netlify-identity-widget": "^1.9.1",
+    "netlify-identity-widget": "^1.9.1",
     "next": "latest",
     "next-redux-wrapper": "^6.0.2",
     "react": "17.0.2",
