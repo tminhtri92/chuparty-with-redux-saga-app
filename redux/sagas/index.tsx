@@ -1,8 +1,8 @@
-import { all, call, delay, put, take, takeLatest } from "redux-saga/effects";
-import { userTestTypes } from "../types";
+import { all } from "redux-saga/effects";
 
 import userTestSaga from "./userTest";
+import settingMenuSaga from "./settings/menu";
 
 export default function* rootSaga() {
-  yield all([userTestSaga()]);
+  yield all([userTestSaga(), settingMenuSaga()]);
 }

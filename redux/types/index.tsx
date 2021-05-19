@@ -1,2 +1,4 @@
 import * as userTestTypes from "./userTest";
-export { userTestTypes };
+import * as settingMenuTypes from "./settings/menu";
+
+export { userTestTypes, settingMenuTypes };

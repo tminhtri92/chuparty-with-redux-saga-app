@@ -1,34 +1,61 @@
-import { useState, useEffect } from "react";
-import Head from "next/head";
-import Link from "next/link";
-
-import netlifyAuth from "../../../netlifyAuth";
-import { getData, saveData } from "../../../libs/github";
+import React, { useState, useEffect, useRef } from "react"
+import Head from "next/head"
+import Link from "next/link"
+import FileBase64 from "react-file-base64"
+import styled from "styled-components"
+import { END } from "redux-saga"
+import { wrapper } from "../../../redux/store"
+import { settingMenuActions } from "../../../redux/actions"
+import { useSelector } from "react-redux"
+// import netlifyAuth from "../../../netlifyAuth";
+import {
+  getData,
+  saveData,
+  saveDataImage,
+  saveDataJSON,
+} from "../../../libs/github"
+import AdminLayout from "../../../components/Admin/Layout"
+import Tree from "@atlaskit/tree"
+import DragDropWithNestingTree from "../../../components/Admin/DragDropWithNestingTree"
+import AddMenuModal from "../../../components/Admin/Menu/AddMenuModal"
 
 export default function AdminHome() {
-  let [loggedIn, setLoggedIn] = useState(netlifyAuth.isAuthenticated);
-  let [user, setUser] = useState(null);
+  const settingMenu = useSelector((state) => state.settingMenu)
+  const [settingMenuData, setSettingMenuData] = useState(null)
+  const [fileUpload, setFileUpload] = useState(null)
+  const menuData = useRef(null)
+  useEffect(() => {
+    setSettingMenuData(settingMenu)
+  }, [])
 
   useEffect(() => {
-    let isCurrent = true;
-    netlifyAuth.initialize((user) => {
-      if (isCurrent) {
-        setLoggedIn(!!user);
-        setUser(user);
+    console.log(settingMenuData)
+  }, [settingMenuData])
+
+  const handleSaveImageData = () => {
+    const base64result = fileUpload.base64.split(",")[1]
+    saveDataImage("public/test.png", base64result).then(function (result) {
+      console.log(result)
+    })
+  }
+
+  const handleSaveData = (fileName) => {
+    console.log("menuData.current.state.tree", menuData.current.state.tree)
+    saveDataJSON(`public/${fileName}`, menuData.current.state.tree).then(
+      function (result) {
+        console.log(result)
       }
-    });
+    )
+  }
 
-    return () => {
-      isCurrent = false;
-    };
-  }, []);
+  const getFiles = (files) => {
+    setFileUpload(files)
+    console.log(files)
+    const base64result = files.base64.split(",")[1]
+    console.log("ádasd", base64result)
+  }
 
-  const handleTestSaveData = () => {
-    saveData("public/newfile.txt", "Some data").then(function (result) {
-      console.log(result);
-    });
-  };
-
+  // <FileBase64 multiple={false} onDone={(files) => getFiles(files)} />
   return (
     <div className="container">
       <Head>
@@ -36,70 +63,45 @@ export default function AdminHome() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {loggedIn ? (
-        <main>
-          <p className="description">
-            Wow, secrets are super cool. Welcome {user?.user_metadata.full_name}
-            !
-          </p>
-          <button
-            onClick={() => {
-              handleTestSaveData();
-            }}
-          >
-            Test
-          </button>
-          <button
-            onClick={() => {
-              netlifyAuth.signout(() => {
-                setLoggedIn(false);
-                setUser(null);
-              });
-            }}
-          >
-            Log out.
-          </button>
-        </main>
-      ) : (
-        <main>
-          <p>YOU ARE NOT ALLOWED HERE.</p>
-          <Link href="/admin">
-            <a>Go back to login.</a>
-          </Link>
-        </main>
-      )}
+      <AdminLayout>
+        <button
+          onClick={() => {
+            handleSaveData("settings/menu.json")
+          }}
+        >
+          Save
+        </button>
 
-      <style jsx>{`
-        .container {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
+        {settingMenuData && (
+          <DragDropWithNestingTree
+            data={settingMenuData.data}
+            ref={menuData}
+            callback={(item) => {
+              console.log(item)
+            }}
+          />
+        )}
+      </AdminLayout>
     </div>
-  );
+  )
 }
+
+// export const getStaticProps = wrapper.getStaticProps(async ({ store }) => {
+//   if (!store.getState().settingMenu) {
+//     store.dispatch(settingMenuActions.settingMenuLoadData());
+//     store.dispatch(END);
+//   }
+
+//   await store.sagaTask.toPromise();
+// });
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async ({ store }) => {
+    if (!store.getState().settingMenu) {
+      store.dispatch(settingMenuActions.settingMenuLoadData())
+      store.dispatch(END)
+    }
+
+    await store.sagaTask.toPromise()
+  }
+)
