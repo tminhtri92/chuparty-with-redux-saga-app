@@ -1,0 +1,18 @@
+{
+   "sliderBanner":[
+      {
+         "id":"sliderBanner-1",
+         "alt":"Slider 1",
+         "link":"",
+         "imageUrl":"",
+         "active":true
+      },
+      {
+         "id":"sliderBanner-2",
+         "alt":"Slider 2",
+         "link":"",
+         "imageUrl":"",
+         "active":true
+      }
+   ]
+}
