@@ -3,15 +3,15 @@
       {
          "id":"sliderBanner-1",
          "alt":"Slider 1",
-         "link":"",
-         "imageUrl":"",
+         "link":"/",
+         "imageUrl":"images/slider-banner-1.jpeg",
          "active":true
       },
       {
          "id":"sliderBanner-2",
          "alt":"Slider 2",
-         "link":"",
-         "imageUrl":"",
+         "link":"/",
+         "imageUrl":"images/slider-banner-2.jpeg",
          "active":true
       }
    ]
