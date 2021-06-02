@@ -13,36 +13,36 @@
          "link":"/",
          "imageUrl":"images/slider-banner-2.jpeg",
          "active":true
-      },
+      }
    ],
-   "collection-1" : {
-      "title": "",
-      "collectionId": "",
-      "maxItem" : "",
-      "link" : "",
+   "collection-1":{
+      "title":"",
+      "collectionId":"",
+      "maxItem":"",
+      "link":""
    },
-     "collection-2" : {
-      "title": "",
-      "collectionId": "",
-      "maxItem" : "",
-      "link" : "",
+   "collection-2":{
+      "title":"",
+      "collectionId":"",
+      "maxItem":"",
+      "link":""
    },
-      "collection-3" : {
-      "title": "",
-      "collectionId": "",
-      "maxItem" : "",
-      "link" : "",
+   "collection-3":{
+      "title":"",
+      "collectionId":"",
+      "maxItem":"",
+      "link":""
    },
-      "collection-4" : {
-      "title": "",
-      "collectionId": "",
-      "maxItem" : "",
-      "link" : "",
+   "collection-4":{
+      "title":"",
+      "collectionId":"",
+      "maxItem":"",
+      "link":""
    },
-      "collection-5" : {
-      "title": "",
-      "collectionId": "",
-      "maxItem" : "",
-      "link" : "",
-   },
+   "collection-5":{
+      "title":"",
+      "collectionId":"",
+      "maxItem":"",
+      "link":""
+   }
 }
